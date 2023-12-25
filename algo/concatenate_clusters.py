@@ -46,7 +46,11 @@ def concatenate_clusters(cluster_a: np.ndarray, cluster_b: np.ndarray, centroid_
             if point[0] != p3[0] and point[1] != p3[1]:
                 distances.append((point, dist(point, p2)))
         distances.sort(key=lambda x: x[1])
-        p4 = distances[0][0]
+        p4 = 0
+        try:
+            p4 = distances[0][0]
+        except Exception:
+            print(distances)
 
         idx1 = [idx for idx, x in enumerate(cluster) if x[0] == p3[0] and x[1] == p3[1]][0]
 
