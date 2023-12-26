@@ -1,9 +1,10 @@
 from math import dist
 import numpy as np
-from algo.concatenate_clusters import concatenate_clusters
+from algo.concatenate_clusters_one import concatenate_clusters_one
+from algo.concatenate_clusters_two import concatenate_clusters_two
 from plotting.plot_clusters import plot_clusters
 
-def concatenate_all(clusters, centroids):
+def concatenate_all(clusters, centroids, alg="one"):
 
     t_clusters = list(clusters)
     t_centroids = list(centroids)
@@ -17,7 +18,12 @@ def concatenate_all(clusters, centroids):
                 B = i
         # print(A, B)
 
-        new_cluster, new_centroid, cp = concatenate_clusters(t_clusters[A], t_clusters[B], t_centroids[A], t_centroids[B])
+        new_cluster, new_centroid, connection_points = 1, 2, 3
+
+        if alg == "one":
+            new_cluster, new_centroid, connection_points = concatenate_clusters_one(t_clusters[A], t_clusters[B], t_centroids[A], t_centroids[B])
+        if alg == "two":
+            new_cluster, new_centroid, connection_points = concatenate_clusters_two(t_clusters[A], t_clusters[B], t_centroids[A], t_centroids[B])
 
         t_clusters = [np.atleast_2d(x) for idx, x in enumerate(t_clusters) if idx != A and idx != B]
         t_centroids = [x for idx, x in enumerate(t_centroids) if idx != A and idx != B]
